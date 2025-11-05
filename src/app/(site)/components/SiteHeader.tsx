@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "./Button";
@@ -10,6 +11,11 @@ import { cn } from "./utils";
 export const SiteHeader = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     if (typeof document === "undefined") {
@@ -89,50 +95,58 @@ export const SiteHeader = () => {
           </svg>
         </button>
       </div>
-      <div
-        id="mobile-nav"
-        className={cn(
-          "lg:hidden",
-          "fixed inset-0 z-50 origin-top text-white transition-opacity duration-300 ease-out",
-          "bg-[#081522] supports-[backdrop-filter]:bg-[#081522]",
-          "supports-[backdrop-filter]:backdrop-blur-sm",
-          isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
-        )}
-        role="dialog"
-        aria-modal="true"
-        aria-hidden={!isOpen}
-      >
-        <div className="flex h-full flex-col justify-between px-6 pb-8 pt-24">
-          <nav className="space-y-6">
-            {menuItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "block text-2xl font-semibold tracking-tight transition-transform duration-300",
-                  pathname === item.href ? "text-white" : "text-white/75 hover:text-white",
-                )}
-                style={{ transform: isOpen ? "none" : "translateY(12px)", transitionDelay: isOpen ? item.delay : "0ms" }}
-                onClick={closeMenu}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <div className="space-y-4">
-            <Button href="/contact" variant="primary" className="w-full justify-center" onClick={closeMenu}>
-              Request Assessment
-            </Button>
-            <Link
-              href="tel:+118553774622"
-              className="block text-center text-sm font-semibold uppercase tracking-[0.28em] text-white/80"
-              onClick={closeMenu}
+      {isClient
+        ? createPortal(
+            <div
+              id="mobile-nav"
+              className={cn(
+                "lg:hidden",
+                "fixed inset-0 z-[80] origin-top text-white transition-opacity duration-300 ease-out",
+                "bg-[#081522]",
+                isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
+              )}
+              role="dialog"
+              aria-modal="true"
+              aria-hidden={!isOpen}
+              style={{ backgroundColor: "#081522" }}
             >
-              Call 1-855-377-4622
-            </Link>
-          </div>
-        </div>
-      </div>
+              <div className="flex h-full flex-col justify-between px-6 pb-8 pt-24">
+                <nav className="space-y-6">
+                  {menuItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        "block text-2xl font-semibold tracking-tight transition-transform duration-300",
+                        pathname === item.href ? "text-white" : "text-white/75 hover:text-white",
+                      )}
+                      style={{
+                        transform: isOpen ? "none" : "translateY(12px)",
+                        transitionDelay: isOpen ? item.delay : "0ms",
+                      }}
+                      onClick={closeMenu}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </nav>
+                <div className="space-y-4">
+                  <Button href="/contact" variant="primary" className="w-full justify-center" onClick={closeMenu}>
+                    Request Assessment
+                  </Button>
+                  <Link
+                    href="tel:+118553774622"
+                    className="block text-center text-sm font-semibold uppercase tracking-[0.28em] text-white/80"
+                    onClick={closeMenu}
+                  >
+                    Call 1-855-377-4622
+                  </Link>
+                </div>
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </header>
   );
 };
