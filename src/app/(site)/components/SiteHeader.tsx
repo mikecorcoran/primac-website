@@ -93,8 +93,8 @@ export const SiteHeader = () => {
         id="mobile-nav"
         className={cn(
           "lg:hidden",
-          "fixed inset-0 z-40 origin-top bg-[#081522]/95 text-white transition-all duration-300 ease-out",
-          isOpen ? "pointer-events-auto opacity-100 backdrop-blur" : "pointer-events-none opacity-0",
+          "fixed inset-0 z-40 origin-top bg-[#081522] text-white transition-opacity duration-300 ease-out supports-[backdrop-filter]:backdrop-blur-sm",
+          isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         )}
         role="dialog"
         aria-modal="true"
