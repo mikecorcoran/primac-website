@@ -424,5 +424,5 @@ Outcome: Codex won’t rely on its older training. It will detect current versio
 
 * Where copy is still missing, create concise, factual placeholders that match tone and mark them `TODO(content)` so writers can replace them quickly.
 * Keep components small, pure, and documented with JSDoc. Favor readability and maintainability; this site will grow into deeper content (case studies/team pages) later.
-* **Mobile nav quick fix**: iOS Safari ignores some arbitrary background values. Use the solid colour class `bg-[#081522]` (with optional blur-enabled alpha override) for the mobile navigation overlay in `src/app/(site)/components/SiteHeader.tsx` to guarantee an opaque backdrop.
+* **Mobile nav quick fix**: iOS Safari ignores some arbitrary background values. Use the solid colour class `bg-[#081522]` for the mobile navigation overlay in `src/app/(site)/components/SiteHeader.tsx`, and avoid translucent overrides so the backdrop stays fully opaque even when `backdrop-filter` is supported.
 * When iterating on the header/mobile nav, you can skip lint/test runs unless the user explicitly requests them; prioritise the visual fix first.
