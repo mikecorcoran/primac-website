@@ -94,7 +94,7 @@ export const SiteHeader = () => {
         className={cn(
           "lg:hidden",
           "fixed inset-0 z-50 origin-top text-white transition-opacity duration-300 ease-out",
-          "bg-[color:rgba(8,21,34,0.94)] supports-[backdrop-filter]:bg-[color:rgba(8,21,34,0.85)]",
+          "bg-[#081522] supports-[backdrop-filter]:bg-[#081522]/90",
           "supports-[backdrop-filter]:backdrop-blur-sm",
           isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         )}
