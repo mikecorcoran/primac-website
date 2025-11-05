@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-base: #ffffff;
+  --color-surface: #f4f4f4;
+  --color-steel: #1e3d58;
+  --color-graphite: #2e2e2e;
+  --color-accent: #d58512;
+  --color-teal: #277083;
+  --color-muted: #5c6f7d;
+  --font-sans: "Inter", "Segoe UI", "system-ui", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --radius-card: 4px;
+  --shadow-card: 0 18px 30px -24px rgba(30, 61, 88, 0.5);
+  --shadow-hover: 0 20px 36px -24px rgba(39, 112, 131, 0.45);
+  --spacing-section: clamp(4rem, 8vw, 6.5rem);
+  --max-content: 1120px;
+}
+
+@layer base {
+  :root {
+    color-scheme: only light;
+  }
+
+  body {
+    @apply bg-base text-graphite font-sans leading-[1.6] antialiased;
+  }
+
+  main {
+    @apply bg-base;
+  }
+
+  a {
+    @apply underline-offset-4 transition-colors duration-200 ease-in-out;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-teal) 25%, white);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 320ms ease-out, transform 320ms ease-out;
+  }
+
+  .fade-in-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in-up,
+    .fade-in-up.is-visible {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    html {
+      scroll-behavior: auto !important;
+    }
+  }
+}
