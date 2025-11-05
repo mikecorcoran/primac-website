@@ -23,9 +23,10 @@ export default function IndustriesPage() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {industries.items.map((industry) => (
             <Card
-              key={industry}
-              title={industry}
-              description="TODO(content): Provide sector-specific capability statements and representative project outcomes."
+              key={industry.title}
+              title={industry.title}
+              description={industry.description}
+              icon={{ src: industry.icon, alt: `${industry.title} icon` }}
             />
           ))}
         </div>

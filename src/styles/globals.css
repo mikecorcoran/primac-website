@@ -22,7 +22,7 @@
   }
 
   body {
-    @apply bg-base text-graphite font-sans leading-[1.6] antialiased;
+    @apply bg-base font-sans leading-[1.6] text-graphite antialiased;
   }
 
   main {
@@ -49,22 +49,37 @@
     text-wrap: balance;
   }
 
+  .parallax-layer {
+    will-change: transform;
+  }
+
   .fade-in-up {
     opacity: 0;
     transform: translateY(16px);
-    transition: opacity 320ms ease-out, transform 320ms ease-out;
   }
 
-  .fade-in-up.is-visible {
+  .is-visible .fade-in-up {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    transition: opacity 320ms ease-in-out, transform 320ms ease-in-out;
+  }
+
+  .card-hover {
+    transition: transform 220ms ease-in-out, box-shadow 220ms ease-in-out;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .fade-in-up,
-    .fade-in-up.is-visible {
+    .fade-in-up {
       opacity: 1;
       transform: none;
+    }
+
+    .is-visible .fade-in-up {
       transition: none;
     }
 

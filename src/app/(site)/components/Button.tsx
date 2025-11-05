@@ -15,11 +15,11 @@ type ButtonBaseProps = PropsWithChildren<
 
 const variantMap: Record<ButtonVariant, string> = {
   primary:
-    "bg-accent text-white shadow-[0_14px_30px_-18px_rgba(213,133,18,0.75)] hover:bg-[#c2770f] hover:-translate-y-1",
+    "bg-accent text-white shadow-[0_14px_30px_-18px_rgba(213,133,18,0.75)] hover:bg-[#c2770f] hover:-translate-y-0.5",
   secondary:
-    "border border-steel text-steel hover:bg-surface/80 hover:-translate-y-1",
+    "border border-steel text-steel hover:bg-surface/80 hover:-translate-y-0.5",
   ghost:
-    "text-teal hover:text-steel hover:-translate-y-1",
+    "text-teal hover:text-steel",
 };
 
 const baseClasses =
