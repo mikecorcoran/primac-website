@@ -8,6 +8,52 @@ import { Button } from "./Button";
 import { NAV_ITEMS } from "./navigation";
 import { cn } from "./utils";
 
+type MobileMenuToggleProps = {
+  isOpen: boolean;
+  onClick: () => void;
+  className?: string;
+};
+
+const toggleButtonBase =
+  "inline-flex h-10 w-10 items-center justify-center rounded-[4px] border transition-all duration-200 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal hover:-translate-y-0.5 hover:shadow-sm";
+
+const toggleLineBase =
+  "absolute left-0 h-[2px] w-full rounded-full bg-current transition-transform duration-200 ease-out";
+
+const toggleLineMiddle =
+  "absolute left-0 top-1/2 h-[2px] w-full -translate-y-1/2 rounded-full bg-current transition-opacity duration-150 ease-out";
+
+const MobileMenuToggle = ({ isOpen, onClick, className }: MobileMenuToggleProps) => (
+  <button
+    type="button"
+    className={cn(toggleButtonBase, className)}
+    onClick={onClick}
+    aria-expanded={isOpen}
+    aria-haspopup="true"
+    aria-controls="mobile-nav"
+    aria-label={isOpen ? "Close navigation" : "Open navigation"}
+  >
+    <span aria-hidden className="relative block h-3.5 w-5">
+      <span
+        className={cn(
+          toggleLineBase,
+          "top-0",
+          isOpen ? "translate-y-[7px] rotate-45" : "",
+        )}
+      />
+      <span className={cn(toggleLineMiddle, isOpen ? "opacity-0" : "opacity-100")} />
+      <span
+        className={cn(
+          toggleLineBase,
+          "bottom-0",
+          isOpen ? "-translate-y-[7px] -rotate-45" : "",
+        )}
+      />
+    </span>
+    <span className="sr-only">Toggle navigation</span>
+  </button>
+);
+
 export const SiteHeader = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -71,29 +117,14 @@ export const SiteHeader = () => {
             Request Assessment
           </Button>
         </div>
-        <button
-          type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-[4px] border border-[#d7dde3] text-steel transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal lg:hidden"
+        <MobileMenuToggle
+          isOpen={isOpen}
           onClick={() => setIsOpen((prev) => !prev)}
-          aria-expanded={isOpen}
-          aria-controls="mobile-nav"
-        >
-          <span className="sr-only">Toggle navigation</span>
-          <svg
-            className="h-5 w-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          >
-            {isOpen ? (
-              <path d="M6 6L18 18M6 18L18 6" />
-            ) : (
-              <path d="M4 7H20M4 12H20M4 17H20" />
-            )}
-          </svg>
-        </button>
+          className={cn(
+            "lg:hidden",
+            isOpen ? "border-white/40 text-white" : "border-[#d7dde3] text-steel",
+          )}
+        />
       </div>
       {isClient
         ? createPortal(
@@ -110,37 +141,67 @@ export const SiteHeader = () => {
               aria-hidden={!isOpen}
               style={{ backgroundColor: "#081522" }}
             >
-              <div className="flex h-full flex-col justify-between px-6 pb-8 pt-24">
-                <nav className="space-y-6">
-                  {menuItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={cn(
-                        "block text-2xl font-semibold tracking-tight transition-transform duration-300",
-                        pathname === item.href ? "text-white" : "text-white/75 hover:text-white",
-                      )}
-                      style={{
-                        transform: isOpen ? "none" : "translateY(12px)",
-                        transitionDelay: isOpen ? item.delay : "0ms",
-                      }}
-                      onClick={closeMenu}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
-                <div className="space-y-4">
-                  <Button href="/contact" variant="primary" className="w-full justify-center" onClick={closeMenu}>
-                    Request Assessment
-                  </Button>
+              <div className="flex h-full flex-col">
+                <div className="flex items-center justify-between px-6 pt-6">
                   <Link
-                    href="tel:+118553774622"
-                    className="block text-center text-sm font-semibold uppercase tracking-[0.28em] text-white/80"
+                    href="/"
+                    className="flex items-center gap-2 text-white"
                     onClick={closeMenu}
                   >
-                    Call 1-855-377-4622
+                    <span className="text-sm font-semibold uppercase tracking-[0.3em]">
+                      Primac
+                    </span>
+                    <span className="text-sm font-medium text-white/70">
+                      Reliability Consultants
+                    </span>
                   </Link>
+                  <MobileMenuToggle
+                    isOpen={isOpen}
+                    onClick={closeMenu}
+                    className="border-white/40 text-white"
+                  />
+                </div>
+                <div className="flex-1 overflow-y-auto">
+                  <div className="flex min-h-full flex-col px-6 pb-8 pt-12">
+                    <nav className="space-y-6">
+                      {menuItems.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className={cn(
+                            "block text-2xl font-semibold tracking-tight transition-transform duration-300",
+                            pathname === item.href
+                              ? "text-white"
+                              : "text-white/75 hover:text-white",
+                          )}
+                          style={{
+                            transform: isOpen ? "none" : "translateY(12px)",
+                            transitionDelay: isOpen ? item.delay : "0ms",
+                          }}
+                          onClick={closeMenu}
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </nav>
+                    <div className="mt-auto space-y-4 pt-12">
+                      <Button
+                        href="/contact"
+                        variant="primary"
+                        className="w-full justify-center"
+                        onClick={closeMenu}
+                      >
+                        Request Assessment
+                      </Button>
+                      <Link
+                        href="tel:+118553774622"
+                        className="block text-center text-sm font-semibold uppercase tracking-[0.28em] text-white/80"
+                        onClick={closeMenu}
+                      >
+                        Call 1-855-377-4622
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>,
