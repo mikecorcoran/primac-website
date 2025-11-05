@@ -55,13 +55,13 @@
 
   .fade-in-up {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(16px);
   }
 
   .is-visible .fade-in-up {
     opacity: 1;
     transform: none;
-    transition: opacity 240ms ease-in-out, transform 240ms ease-in-out;
+    transition: opacity 320ms ease-in-out, transform 320ms ease-in-out;
   }
 
   .card-hover {
