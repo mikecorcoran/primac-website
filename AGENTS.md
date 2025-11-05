@@ -316,6 +316,108 @@ Map the Content Blueprint into pages with headings, copy, and CTAs as provided.
 * [ ] GitHub → Vercel pipeline working (Preview + Production).
 * [ ] No scope creep beyond spec unless user asked for it (document any proposals as TODOs).
 
+⸻
+
+19) Freshness & Version Gate (Nov 2025)
+
+Intent: Ensure the stack is current, compatible, and reproducible. Codex must verify versions at run-time and adapt the scaffold accordingly.
+
+19.1 What’s “current” right now
+	•	Next.js 16 (App Router) — stable; ships stable Turbopack, React Compiler support, caching and routing improvements. Use it unless an older project constraint exists.  ￼
+	•	Tailwind CSS v4.x — config-light model (no tailwind.config.* required), @import "tailwindcss" in CSS, @theme tokens; major perf + DX shifts from v3. Use 4.1.x or newer.  ￼
+	•	React 19 — stable since Dec 2024; many libs are now compatible, but double-check motion libs.  ￼
+	•	Node.js 24 “Krypton” (Active LTS) — preferred engine for CI/Prod. Avoid EoL Node lines.  ￼
+	•	npm 11.x — latest stable client; note recent auth/security tightening.  ￼
+
+19.2 Quick compatibility matrix (recommended)
+
+Layer	Version (min)	Notes
+Node	24.x (LTS)	Pin in .nvmrc/engines; CI uses Node 24.
+npm	11.x	Fine on Node 24; quiet logs for CI.  ￼
+React	19.x	Next 16 template uses React 19.  ￼
+Next.js	16.x	App Router; Turbopack default.  ￼
+Tailwind CSS	4.1.x+	New @theme tokens; no config required.  ￼
+
+If a hosted runner can’t fetch Node 24, fall back to the most recent LTS available, then re-run “Version Audit” (below) and record the deviation in README.
+
+19.3 Version Audit (must run before scaffold)
+
+Codex, execute:
+
+# Node & npm
+node -v && npm -v
+
+# Latest stable tags (do not install yet):
+npm view next version
+npm view tailwindcss dist-tags --json
+npm view react version
+
+# Record results in README under "Framework & Styling Versions (verified DATE_UTC)"
+
+Rules:
+	•	Use Next 16.x, Tailwind 4.1.x+, React 19.x, Node 24.x LTS if available.
+	•	If any constraint blocks these, pin the highest compatible set and explain in a README “Compat Notes” section.
+
+19.4 Tailwind 4 changes Codex must respect
+	•	Prefer CSS-first setup: @import "tailwindcss" in a global CSS (already present), and define design tokens with @theme. No default tailwind.config.* is required.  ￼
+	•	Many plugin/config patterns from v3 have changed; only add plugins when necessary. Tailwind 4.1 adds more utilities and DX polish.  ￼
+
+19.5 Next 16 changes that affect our repo
+	•	Turbopack is stable & default; keep it. Faster dev/builds.
+	•	React Compiler support is built-in; no extra steps required to benefit from memoization improvements.
+	•	Caching & routing enhancements reduce boilerplate for prefetch and layouts. Summarize the chosen defaults in README.  ￼
+
+19.6 Motion libraries guidance (React 19 era)
+	•	Prefer native IntersectionObserver + CSS for reveal/hover; we already ship a tiny useReveal() utility.
+	•	If a third-party is truly needed:
+	•	Motion (motion.dev) is actively maintained and SSR-friendly; verify its React 19 notes before adding.  ￼
+	•	Framer Motion: older reports flagged React 19 incompatibilities, since resolved in newer releases — but pin latest and verify locally (smoke test transitions) before committing. If install scripts fail, fall back to our CSS/IO approach.  ￼
+	•	For smooth scrolling/parallax, Lenis is popular; test with our reduced-motion gate. GSAP ScrollTrigger remains battle-tested for scroll timelines; keep it optional.  ￼
+
+19.7 npm supply-chain hygiene (2025 updates)
+	•	npm tightened publishing/auth this year; expect more 2FA/trusted-publishing flows in the ecosystem.  ￼
+	•	Supply-chain incidents continue (malicious/typosquat packages, compromised maintainers). Keep dependencies minimal; audit installs.  ￼
+
+Install policy:
+	•	Install with --no-fund --no-audit --progress=false in CI to reduce noise (audit is noisy, not a security control).
+	•	Prefer exact versions for new libs (no ^), then upgrade intentionally.
+
+19.8 Pin & document (automated)
+
+After scaffold, Codex must:
+	1.	Write versions into README:
+
+- Node: <v24.x detected> (LTS)
+- npm:  <v11.x detected>
+- Next: <npm view next version>
+- React: <npm view react version>
+- Tailwind: <npm view tailwindcss version or dist-tag latest>
+- Bundler: Turbopack (Next 16 default)
+
+	2.	Create .nvmrc with the detected Node LTS (e.g., v24.11.0).  ￼
+	3.	Add engines to package.json:
+
+"engines": { "node": ">=24 <25", "npm": ">=11" }
+
+	4.	Record deviations (if any) in README “Compat Notes”.
+
+19.9 Minimal commands Codex should prefer
+
+# scaffold (new dir) using Next 16 template with Tailwind 4:
+npx create-next-app@latest . --ts --app --tailwind --eslint --src-dir --import-alias "@/*"
+
+# dev
+npm run dev
+
+# build
+npm run build && npm run start
+
+If the directory isn’t empty, scaffold in a temp folder and rsync in (excluding existing README/AGENTS.md), then remove the temp folder.
+
+⸻
+
+Outcome: Codex won’t rely on its older training. It will detect current versions, choose the compatible set (Next 16 / React 19 / Tailwind 4.1 / Node 24 LTS / npm 11), pin them, and document what changed and why—while keeping optional motion libs behind a gate and defaulting to our CSS/IntersectionObserver approach for reliability.
+
 ---
 
 **Notes to Codex**
