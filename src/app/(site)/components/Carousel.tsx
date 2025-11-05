@@ -78,26 +78,27 @@ export const Carousel = ({ items }: CarouselProps) => {
 
   return (
     <div className="relative">
-      <div
-        className="overflow-hidden"
-        ref={viewportRef}
-        onKeyDown={handleKeyDown}
-        tabIndex={0}
-        aria-roledescription="carousel"
-        aria-label="Project imagery"
-      >
-        <div className="flex touch-pan-y gap-6">
-          {items.map((item, index) => (
-            <article
-              key={item.src}
-              className="group relative min-w-0 shrink-0 basis-[80%] rounded-[5px] border border-[#d0d9e1] bg-white shadow-[0_22px_45px_-38px_rgba(12,31,49,0.55)] transition-transform duration-300 ease-out sm:basis-[46%] lg:basis-[32%]"
-            >
-              <div className="relative h-56 overflow-hidden sm:h-64">
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  fill
-                  sizes="(min-width: 1024px) 32vw, (min-width: 640px) 46vw, 80vw"
+      <div className="-mx-6 sm:mx-0">
+        <div
+          className="overflow-hidden px-6 sm:px-0"
+          ref={viewportRef}
+          onKeyDown={handleKeyDown}
+          tabIndex={0}
+          aria-roledescription="carousel"
+          aria-label="Project imagery"
+        >
+          <div className="flex touch-pan-y gap-4 sm:gap-6">
+            {items.map((item, index) => (
+              <article
+                key={item.src}
+                className="group relative min-w-0 shrink-0 basis-full rounded-[5px] border border-[#d0d9e1] bg-white shadow-[0_22px_45px_-38px_rgba(12,31,49,0.55)] transition-transform duration-300 ease-out sm:basis-[46%] lg:basis-[32%]"
+              >
+                <div className="relative h-56 overflow-hidden sm:h-64">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes="(min-width: 1024px) 32vw, (min-width: 640px) 46vw, 80vw"
                   className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                   loading={index === 0 ? "eager" : "lazy"}
                 />
@@ -114,12 +115,13 @@ export const Carousel = ({ items }: CarouselProps) => {
               </div>
             </article>
           ))}
+          </div>
         </div>
       </div>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white via-white/80 to-transparent" aria-hidden="true" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white via-white/80 to-transparent" aria-hidden="true" />
-      <div className="mt-6 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
+      <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-24 bg-gradient-to-r from-white via-white/80 to-transparent sm:block" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-24 bg-gradient-to-l from-white via-white/80 to-transparent sm:block" aria-hidden="true" />
+      <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+        <div className="hidden items-center gap-2 sm:flex">
           <button
             type="button"
             className="card-hover inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d7dde3] bg-white text-steel transition-colors duration-200 ease-in-out disabled:cursor-not-allowed disabled:opacity-40"
@@ -139,7 +141,7 @@ export const Carousel = ({ items }: CarouselProps) => {
             <span aria-hidden="true">→</span>
           </button>
         </div>
-        <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Carousel dots">
+        <div className="flex flex-wrap items-center justify-center gap-2" role="tablist" aria-label="Carousel dots">
           {items.map((item, index) => (
             <button
               key={item.src}
