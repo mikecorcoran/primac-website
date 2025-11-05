@@ -109,14 +109,16 @@ export const ReliabilityArc = ({ steps, description }: ReliabilityArcProps) => {
       (entries) => {
         let dominantEntry: IntersectionObserverEntry | null = null;
 
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           if (!dominantEntry || entry.intersectionRatio > dominantEntry.intersectionRatio) {
             dominantEntry = entry;
           }
-        });
+        }
 
         if (dominantEntry) {
-          const nextIndex = Number(dominantEntry.target.getAttribute("data-index") ?? 0);
+          const target = dominantEntry.target;
+          const attributeValue = target.getAttribute("data-index");
+          const nextIndex = Number(attributeValue ?? 0);
           setActiveIndex((prev) => (prev === nextIndex ? prev : nextIndex));
           return;
         }
