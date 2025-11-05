@@ -424,3 +424,5 @@ Outcome: Codex won’t rely on its older training. It will detect current versio
 
 * Where copy is still missing, create concise, factual placeholders that match tone and mark them `TODO(content)` so writers can replace them quickly.
 * Keep components small, pure, and documented with JSDoc. Favor readability and maintainability; this site will grow into deeper content (case studies/team pages) later.
+* **Mobile nav quick fix**: the overlay now portals into `document.body` with `z-[80]`, an inline `backgroundColor: "#081522"`, and no backdrop blur. Preserve that solid treatment in `src/app/(site)/components/SiteHeader.tsx`—iOS Safari treats anything translucent as transparent.
+* When iterating on the header/mobile nav, you can skip lint/test runs unless the user explicitly requests them; prioritise the visual fix first.
