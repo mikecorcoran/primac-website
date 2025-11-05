@@ -1,43 +1,77 @@
 {
   "hero": {
-    "title": "Operational Resilience, Delivered Reliably.",
-    "subtitle": "Field-proven maintenance and condition monitoring for heavy industry.",
+    "eyebrow": "Reliability for high-consequence operations",
+    "title": "Operational resilience engineered for critical assets.",
+    "subtitle": "Field-proven maintenance programs, diagnostics, and monitoring for heavy industry.",
     "primaryCta": {
       "label": "Request a Reliability Assessment",
       "href": "/contact"
     },
-    "secondaryCta": {
-      "label": "Explore Our Services",
-      "href": "/services"
+    "secondaryLink": {
+      "label": "Explore Services",
+      "href": "#services"
     },
-    "background": {
-      "src": "/images/process-and-piping.jpg",
-      "alt": "Piping and industrial equipment under calm evening light."
-    }
+    "layers": [
+      {
+        "src": "/images/process-and-piping.jpg",
+        "alt": "Calm evening light over process piping in an industrial facility."
+      },
+      {
+        "src": "/images/industrial-engineering.jpg",
+        "alt": "Technicians reviewing engineering drawings beside machinery.",
+        "depth": 0.55
+      },
+      {
+        "src": "/images/engineer-using-laptop-computer-for-maintenance-in-thermal-power.jpg",
+        "alt": "Engineer analysing maintenance data inside a turbine hall.",
+        "depth": 0.35
+      }
+    ]
   },
   "narrative": {
     "eyebrow": "A steady path forward",
     "title": "A reliability arc tailored for heavy industry",
+    "description": "When operations face volatility, Primac provides a disciplined arc that moves teams from uncertainty to reliable performance.",
     "items": [
       {
         "title": "Operations Face Uncertainty",
-        "description": "Industrial environments evolve rapidly. Load profiles shift, production targets change, and unexpected failures cascade into costly downtime."
+        "description": "Industrial environments evolve rapidly. Load profiles shift, production targets change, and unexpected failures cascade into costly downtime.",
+        "image": {
+          "src": "/images/group-of-industrial-workers-in-a-refinery-oil-processing-equipment-and-machinery.jpg",
+          "alt": "Operations team observing refinery equipment at dusk."
+        }
       },
       {
         "title": "Assets Degrade Under Pressure",
-        "description": "Bearings, gearboxes, and rotating equipment slowly drift out of spec. Degradation begins long before alarms trip."
+        "description": "Bearings, gearboxes, and rotating equipment slowly drift out of spec. Degradation begins long before alarms trip.",
+        "image": {
+          "src": "/images/gas_turbine_ft8.jpg",
+          "alt": "Gas turbine rotor with maintenance access open."
+        }
       },
       {
         "title": "A Trusted Guide Enters",
-        "description": "Primac brings decades of field experience, disciplined diagnostics, and clear communication into high-stakes environments."
+        "description": "Primac brings decades of field experience, disciplined diagnostics, and clear communication into high-stakes environments.",
+        "image": {
+          "src": "/images/eriks-condition-monitoring.jpeg",
+          "alt": "Condition monitoring specialist setting up vibration sensors."
+        }
       },
       {
         "title": "You Become the Hero",
-        "description": "With actionable insights and calm guidance, your team regains control, avoids emergencies, and plans with confidence."
+        "description": "With actionable insights and calm guidance, your team regains control, avoids emergencies, and plans with confidence.",
+        "image": {
+          "src": "/images/male-engineer-using-laptop-during-night-shift.jpg",
+          "alt": "Maintenance lead reviewing data beside illuminated equipment."
+        }
       },
       {
         "title": "The Outcome: Operational Resilience",
-        "description": "Failures drop. Predictability rises. Maintenance becomes strategic instead of reactive."
+        "description": "Failures drop. Predictability rises. Maintenance becomes strategic instead of reactive.",
+        "image": {
+          "src": "/images/plant-equipment-maintenance.jpg",
+          "alt": "Well-maintained plant equipment under balanced lighting."
+        }
       }
     ]
   },
@@ -49,32 +83,56 @@
       {
         "title": "Experienced, Field-Proven Team",
         "description": "Senior analysts with decades in mills, mines, refineries, terminals, and utilities.",
-        "icon": "/icons/field-team.svg"
+        "icon": "/icons/field-team.svg",
+        "supportingImage": {
+          "src": "/images/chemical-management-service-provider.jpg",
+          "alt": "Primac specialists planning field diagnostics."
+        }
       },
       {
         "title": "Presence & Steadiness Under Pressure",
-        "description": "Calm judgment during critical outages and high-production events.",
-        "icon": "/icons/steadiness.svg"
+        "description": "Calm judgement during critical outages and high-production events.",
+        "icon": "/icons/steadiness.svg",
+        "supportingImage": {
+          "src": "/images/male-engineer-using-laptop-during-night-shift.jpg",
+          "alt": "Engineer coordinating response during a night shift."
+        }
       },
       {
         "title": "Right Technology, Applied Wisely",
         "description": "Tools only matter when paired with domain expertise and correct interpretation.",
-        "icon": "/icons/technology.svg"
+        "icon": "/icons/technology.svg",
+        "supportingImage": {
+          "src": "/images/eriks-condition-monitoring.jpeg",
+          "alt": "Technician installing precision sensors on machinery."
+        }
       },
       {
         "title": "Predictive Maintenance Pioneers",
         "description": "Early adopters of advanced vibration analysis and condition monitoring.",
-        "icon": "/icons/predictive.svg"
+        "icon": "/icons/predictive.svg",
+        "supportingImage": {
+          "src": "/images/industrial-engineering.jpg",
+          "alt": "Analysts collaborating over predictive maintenance reports."
+        }
       },
       {
         "title": "Proven Financial Impact",
         "description": "Major clients have avoided catastrophic failures and recovered production losses.",
-        "icon": "/icons/impact.svg"
+        "icon": "/icons/impact.svg",
+        "supportingImage": {
+          "src": "/images/iStock-1304069364-MEDIUM.jpg",
+          "alt": "Production lines operating steadily after reliability upgrades."
+        }
       },
       {
         "title": "Safety Record & Culture",
         "description": "Zero lost-time injuries in years of field operation.",
-        "icon": "/icons/safety.svg"
+        "icon": "/icons/safety.svg",
+        "supportingImage": {
+          "src": "/images/Canadian-winter-scaled.webp",
+          "alt": "Field crew preparing for cold-weather maintenance work."
+        }
       }
     ]
   },
@@ -108,12 +166,36 @@
     "eyebrow": "Industries",
     "title": "Built for high consequence operations",
     "items": [
-      "Oil & Gas",
-      "Mining & Minerals",
-      "Power & Utilities",
-      "Forestry & Pulp/Paper",
-      "Marine Terminals",
-      "Manufacturing & Heavy Industry"
+      {
+        "title": "Oil & Gas",
+        "description": "Upstream, midstream, and downstream facilities across Western Canada.",
+        "icon": "/icons/industry-oil-gas.svg"
+      },
+      {
+        "title": "Mining & Minerals",
+        "description": "Ore processing, concentrators, and materials handling systems.",
+        "icon": "/icons/industry-mining.svg"
+      },
+      {
+        "title": "Power & Utilities",
+        "description": "Thermal generation, hydro, and transmission infrastructure.",
+        "icon": "/icons/industry-power.svg"
+      },
+      {
+        "title": "Forestry & Pulp/Paper",
+        "description": "High-speed machines, fibre lines, and finishing equipment.",
+        "icon": "/icons/industry-forestry.svg"
+      },
+      {
+        "title": "Marine Terminals",
+        "description": "Loading arms, conveyors, and shiploader assets in harsh environments.",
+        "icon": "/icons/industry-marine.svg"
+      },
+      {
+        "title": "Manufacturing & Heavy Industry",
+        "description": "Complex rotating fleets and bespoke production assets.",
+        "icon": "/icons/industry-manufacturing.svg"
+      }
     ],
     "href": "/industries"
   },
@@ -123,6 +205,10 @@
     "cta": {
       "label": "Read More Success Stories",
       "href": "/case-studies"
+    },
+    "background": {
+      "src": "/images/male-workers-inspecting-gas-plant-260nw-2474607047.webp",
+      "alt": "Technicians inspecting a gas plant with lights glowing at night."
     }
   },
   "certifications": [

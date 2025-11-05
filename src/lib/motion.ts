@@ -2,29 +2,49 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
-export type RevealOptions = {
-  /** Offset applied to the intersection observer root margin. Defaults to `0px 0px -10%`. */
+export const MOTION = {
+  dur: 240,
+  ease: "ease-in-out",
+} as const;
+
+type RevealOptions = {
+  /** Sets how far outside the viewport the observer should trigger. */
   rootMargin?: string;
-  /** When set to `false`, the element will hide again when it leaves the viewport. */
-  once?: boolean;
+  /** Intersection ratio required before marking the element visible. */
+  threshold?: number;
 };
 
-export const revealClassName = "fade-in-up";
+export const usePrefersReducedMotion = () => {
+  const [prefers, setPrefers] = useState(false);
 
-export const prefersReducedMotion = () =>
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) {
+      return;
+    }
+
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setPrefers(media.matches);
+
+    update();
+    media.addEventListener("change", update);
+
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  return prefers;
+};
 
 export const useReveal = <T extends HTMLElement>({
-  rootMargin = "0px 0px -10%",
-  once = true,
+  rootMargin = "0px 0px -12%",
+  threshold = 0.1,
 }: RevealOptions = {}) => {
   const ref = useRef<T | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const observerOptions = useMemo<IntersectionObserverInit>(
-    () => ({ rootMargin }),
-    [rootMargin],
+    () => ({ rootMargin, threshold }),
+    [rootMargin, threshold],
   );
 
   useEffect(() => {
@@ -33,31 +53,80 @@ export const useReveal = <T extends HTMLElement>({
       return;
     }
 
-    if (prefersReducedMotion()) {
-      queueMicrotask(() => setIsVisible(true));
+    if (isVisible) {
+      node.classList.add("is-visible");
       return;
     }
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
+    if (prefersReducedMotion) {
+      const raf = window.requestAnimationFrame(() => {
         setIsVisible(true);
-        if (once) {
+        node.classList.add("is-visible");
+      });
+      return () => window.cancelAnimationFrame(raf);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          node.classList.add("is-visible");
           observer.disconnect();
         }
-      } else if (!once) {
-        setIsVisible(false);
-      }
+      });
     }, observerOptions);
 
     observer.observe(node);
 
     return () => observer.disconnect();
-  }, [observerOptions, once]);
+  }, [isVisible, observerOptions, prefersReducedMotion]);
 
   return { ref, isVisible } as const;
 };
 
-export const revealClasses = (isVisible: boolean, extra?: string) =>
-  [revealClassName, isVisible && "is-visible", extra]
-    .filter(Boolean)
-    .join(" ");
+type ParallaxOptions = {
+  /** The maximum total translateY distance (in px) applied across the scroll range. */
+  max?: number;
+};
+
+export const useParallax = ({ max = 20 }: ParallaxOptions = {}) => {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      const raf = window.requestAnimationFrame(() => setValue(0));
+      return () => window.cancelAnimationFrame(raf);
+    }
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const viewportHeight = window.innerHeight || 1;
+      const progress = Math.min(Math.max(window.scrollY / viewportHeight, 0), 1);
+      const offset = (progress - 0.5) * max;
+      setValue(Number(offset.toFixed(2)));
+    };
+
+    const handleScroll = () => {
+      if (frame) {
+        return;
+      }
+      frame = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+
+    return () => {
+      if (frame) {
+        window.cancelAnimationFrame(frame);
+      }
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [max, prefersReducedMotion]);
+
+  return prefersReducedMotion ? 0 : value;
+};

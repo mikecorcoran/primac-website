@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { HTMLAttributes } from "react";
-import { useReveal, revealClasses } from "@/lib/motion";
+import { Reveal } from "./Reveal";
 import { cn } from "./utils";
 
 type CardProps = HTMLAttributes<HTMLElement> & {
@@ -17,6 +17,9 @@ type CardProps = HTMLAttributes<HTMLElement> & {
   as?: "article" | "div" | "li";
 };
 
+const baseClasses =
+  "card-hover flex h-full flex-col gap-4 rounded-[4px] border border-[#d7dde3] bg-white/95 p-6 shadow-[var(--shadow-card)] transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal";
+
 export const Card = ({
   title,
   description,
@@ -26,19 +29,19 @@ export const Card = ({
   className,
   ...rest
 }: CardProps) => {
-  const { ref, isVisible } = useReveal<HTMLElement>();
-
   const content = (
     <>
       {icon && (
-        <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-surface text-steel">
+        <span className="fade-in-up inline-flex h-12 w-12 items-center justify-center rounded-full bg-surface">
           <Image src={icon.src} alt={icon.alt} width={32} height={32} />
-        </div>
+        </span>
       )}
-      <h3 className="text-lg font-semibold text-steel">{title}</h3>
-      <p className="mt-3 text-sm text-muted sm:text-base">{description}</p>
+      <div className="fade-in-up space-y-3">
+        <h3 className="text-lg font-semibold text-steel">{title}</h3>
+        <p className="text-sm text-muted sm:text-base">{description}</p>
+      </div>
       {href && (
-        <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-teal">
+        <span className="fade-in-up mt-auto inline-flex items-center gap-2 text-sm font-semibold text-teal">
           Learn more
           <span aria-hidden="true">→</span>
         </span>
@@ -46,28 +49,23 @@ export const Card = ({
     </>
   );
 
-  const classes = revealClasses(
-    isVisible,
-    cn(
-      "flex h-full flex-col rounded-[4px] border border-[#d7dde3] bg-white p-6 shadow-[var(--shadow-card)] transition-all duration-200 ease-out hover:-translate-y-1.5 hover:shadow-[var(--shadow-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal",
-      href && "focus-visible:outline-offset-[6px]",
-      className,
-    ),
-  );
-
   if (href) {
     return (
-      <Link ref={ref as never} href={href} className={classes} {...rest}>
-        {content}
-      </Link>
+      <Reveal>
+        <Link href={href} className={cn(baseClasses, className)} {...rest}>
+          {content}
+        </Link>
+      </Reveal>
     );
   }
 
   const Component = as;
 
   return (
-    <Component ref={ref as never} className={classes} {...rest}>
-      {content}
-    </Component>
+    <Reveal>
+      <Component className={cn(baseClasses, className)} {...rest}>
+        {content}
+      </Component>
+    </Reveal>
   );
 };
