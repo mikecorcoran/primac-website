@@ -18,7 +18,7 @@ type CardProps = HTMLAttributes<HTMLElement> & {
 };
 
 const baseClasses =
-  "card-hover flex h-full flex-col gap-4 rounded-[4px] border border-[#d7dde3] bg-white/95 p-6 shadow-[var(--shadow-card)] transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal";
+  "card-hover relative flex h-full flex-col gap-4 overflow-hidden rounded-[6px] border border-[#d7dde3] bg-white/98 p-6 shadow-[0_20px_32px_-36px_rgba(12,31,49,0.7)] transition-all duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal";
 
 export const Card = ({
   title,
@@ -31,21 +31,24 @@ export const Card = ({
 }: CardProps) => {
   const content = (
     <>
-      {icon && (
-        <span className="fade-in-up inline-flex h-12 w-12 items-center justify-center rounded-full bg-surface">
-          <Image src={icon.src} alt={icon.alt} width={32} height={32} />
-        </span>
-      )}
-      <div className="fade-in-up space-y-3">
-        <h3 className="text-lg font-semibold text-steel">{title}</h3>
-        <p className="text-sm text-muted sm:text-base">{description}</p>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/0 via-transparent to-[#f3f6f8]/60" aria-hidden="true" />
+      <div className="relative flex flex-col gap-4">
+        {icon && (
+          <span className="fade-in-up inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#d7dde3] bg-surface/80">
+            <Image src={icon.src} alt={icon.alt} width={32} height={32} />
+          </span>
+        )}
+        <div className="fade-in-up space-y-3">
+          <h3 className="text-lg font-semibold text-steel">{title}</h3>
+          <p className="text-sm text-muted sm:text-base">{description}</p>
+        </div>
+        {href && (
+          <span className="fade-in-up mt-auto inline-flex items-center gap-2 text-sm font-semibold text-teal">
+            Learn more
+            <span aria-hidden="true">→</span>
+          </span>
+        )}
       </div>
-      {href && (
-        <span className="fade-in-up mt-auto inline-flex items-center gap-2 text-sm font-semibold text-teal">
-          Learn more
-          <span aria-hidden="true">→</span>
-        </span>
-      )}
     </>
   );
 

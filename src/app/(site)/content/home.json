@@ -1,8 +1,8 @@
 {
   "hero": {
     "eyebrow": "Reliability for high-consequence operations",
-    "title": "Operational resilience engineered for critical assets.",
-    "subtitle": "Field-proven maintenance programs, diagnostics, and monitoring for heavy industry.",
+    "title": "Bring discipline and calm to mission-critical production",
+    "subtitle": "We design and run reliability programs that keep refineries, terminals, and power assets predictable when every hour matters.",
     "primaryCta": {
       "label": "Request a Reliability Assessment",
       "href": "/contact"
@@ -11,10 +11,16 @@
       "label": "Explore Services",
       "href": "#services"
     },
+    "supportingPoints": [
+      "Permanent vibration monitoring and diagnostics",
+      "Rapid deployment teams across Western Canada",
+      "Root-cause investigations for rotating equipment"
+    ],
     "layers": [
       {
         "src": "/images/process-and-piping.jpg",
-        "alt": "Calm evening light over process piping in an industrial facility."
+        "alt": "Turbine piping and structure under evening light",
+        "depth": 0.9
       },
       {
         "src": "/images/industrial-engineering.jpg",
@@ -22,9 +28,64 @@
         "depth": 0.55
       },
       {
-        "src": "/images/engineer-using-laptop-computer-for-maintenance-in-thermal-power.jpg",
+        "src": "/images/male-engineer-using-laptop-during-night-shift.jpg",
         "alt": "Engineer analysing maintenance data inside a turbine hall.",
         "depth": 0.35
+      }
+    ]
+  },
+  "carousel": {
+    "eyebrow": "Field proven",
+    "title": "Evidence from demanding environments",
+    "description": "Recent assessments and monitoring deployments that kept production on line.",
+    "items": [
+      {
+        "src": "/images/male-workers-inspecting-gas-plant-260nw-2474607047.webp",
+        "title": "Gas plant turnaround diagnostics",
+        "summary": "Full-train vibration sweep and risk register before restart.",
+        "location": "Fort Saskatchewan, AB"
+      },
+      {
+        "src": "/images/gas_turbine_ft8.jpg",
+        "title": "FT8 turbine rotor verification",
+        "summary": "Rotor balance and bearing analysis preventing forced outage.",
+        "location": "Cogeneration facility"
+      },
+      {
+        "src": "/images/eriks-condition-monitoring.jpeg",
+        "title": "Condition monitoring program build",
+        "summary": "Multi-plant sensor deployment with weekly analyst review.",
+        "location": "Prairie potash operations"
+      },
+      {
+        "src": "/images/industrial-engineering.jpg",
+        "title": "Failure investigation workshop",
+        "summary": "Cross-functional root cause with maintenance and production leads.",
+        "location": "Integrated pulp & paper mill"
+      },
+      {
+        "src": "/images/chemical-management-service-provider.jpg",
+        "title": "Asset criticality refresh",
+        "summary": "Re-ranked fleets with maintenance strategy adjustments in four weeks.",
+        "location": "Bulk liquids terminal"
+      },
+      {
+        "src": "/images/engineer-using-laptop-computer-for-maintenance-in-thermal-power.jpg",
+        "title": "Thermal plant remote diagnostics",
+        "summary": "Live trending and alerts feeding 24/7 response protocols.",
+        "location": "Western Canada"
+      },
+      {
+        "src": "/images/group-of-industrial-workers-in-a-refinery-oil-processing-equipment-and-machinery.jpg",
+        "title": "Refinery critical pump rebuild",
+        "summary": "Precision alignment and acceptance testing before service.",
+        "location": "Oil sands upgrader"
+      },
+      {
+        "src": "/images/plant-equipment-maintenance.jpg",
+        "title": "Predictive maintenance playbook",
+        "summary": "Standardized procedures and dashboards for rotating fleets.",
+        "location": "Diversified manufacturer"
       }
     ]
   },
@@ -139,25 +200,26 @@
   "services": {
     "eyebrow": "Services",
     "title": "Reliability services built for rotating equipment",
+    "description": "A disciplined mix of diagnostics, monitoring, and field support keeps assets predictable.",
     "items": [
       {
         "title": "Vibration Analysis",
-        "description": "The backbone of rotating machinery reliability.",
+        "description": "Deep diagnostics, trend reviews, and acceptance testing for rotating assets.",
         "href": "/services#vibration-analysis"
       },
       {
         "title": "Condition Monitoring Programs",
-        "description": "Scalable programs for industrial fleets.",
+        "description": "Scalable multi-site programs with dashboards and analyst oversight.",
         "href": "/services#condition-monitoring"
       },
       {
         "title": "Advanced Diagnostics",
-        "description": "Motion Amplification, ODS/Modal, Ultrasound, Multi-Channel transient analysis.",
+        "description": "Motion Amplification, modal studies, ultrasound, and transient analysis for complex problems.",
         "href": "/services#advanced-diagnostics"
       },
       {
         "title": "Troubleshooting & Field Testing",
-        "description": "On-site support for complex mechanical behaviour.",
+        "description": "Rapid deployment teams for emergent issues and performance validation.",
         "href": "/services#troubleshooting"
       }
     ]
@@ -210,6 +272,36 @@
       "src": "/images/male-workers-inspecting-gas-plant-260nw-2474607047.webp",
       "alt": "Technicians inspecting a gas plant with lights glowing at night."
     }
+  },
+  "photoStrip": {
+    "eyebrow": "Inside Primac",
+    "title": "Fieldwork without the noise",
+    "items": [
+      {
+        "src": "/images/engineer-using-laptop-computer-for-maintenance-in-thermal-power.jpg",
+        "label": "Live diagnostics in turbine hall"
+      },
+      {
+        "src": "/images/cold-construction-worker.jpeg",
+        "label": "Cold-weather inspection crew"
+      },
+      {
+        "src": "/images/eriks-condition-monitoring.jpeg",
+        "label": "Sensor commissioning"
+      },
+      {
+        "src": "/images/chemical-management-service-provider.jpg",
+        "label": "Maintenance planning session"
+      },
+      {
+        "src": "/images/process-and-piping.jpg",
+        "label": "Process infrastructure audit"
+      },
+      {
+        "src": "/images/gas_turbine_ft8.jpg",
+        "label": "Turbine rotor verification"
+      }
+    ]
   },
   "certifications": [
     {

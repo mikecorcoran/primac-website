@@ -1,5 +1,6 @@
 import Link from "next/link";
 import homeContent from "./content/home.json";
+import { Button } from "./components/Button";
 import { Carousel } from "./components/Carousel";
 import { Card } from "./components/Card";
 import { Container } from "./components/Container";
@@ -11,15 +12,11 @@ import { PhotoStrip } from "./components/PhotoStrip";
 import { ReliabilityArc } from "./components/ReliabilityArc";
 import { SectionHeader } from "./components/SectionHeader";
 import { TestimonialBand } from "./components/TestimonialBand";
-import { Button } from "./components/Button";
 import { getImageManifest } from "@/lib/images";
-
-const images = getImageManifest();
-const carouselImages = images.slice(0, Math.min(images.length, 8));
-const photoStripImages = images.slice(Math.max(0, images.length - 6));
 
 const {
   hero,
+  carousel,
   narrative,
   differentiators,
   services,
@@ -27,25 +24,47 @@ const {
   testimonial,
   certifications,
   finalCta,
+  photoStrip,
 } = homeContent;
+
+const manifest = getImageManifest();
+const imageMap = new Map(manifest.map((image) => [image.src, image.alt] as const));
+
+const carouselItems = carousel.items.map((item) => ({
+  ...item,
+  alt: imageMap.get(item.src) ?? item.title,
+}));
+
+const photoStripItems = photoStrip.items.map((item) => ({
+  ...item,
+  alt: imageMap.get(item.src) ?? item.label,
+}));
 
 export default function HomePage() {
   return (
     <div className="flex flex-col">
       <Hero {...hero} />
 
-      {carouselImages.length >= 6 && (
-        <section className="bg-base py-16">
-          <Container className="space-y-8">
-            <SectionHeader eyebrow="In the field" title="Snapshots from active monitoring programs" />
-            <Carousel images={carouselImages} />
+      {carouselItems.length >= 6 && (
+        <section className="bg-base py-[var(--spacing-section)]">
+          <Container className="space-y-10">
+            <SectionHeader
+              eyebrow={carousel.eyebrow}
+              title={carousel.title}
+              description={carousel.description}
+            />
+            <Carousel items={carouselItems} />
           </Container>
         </section>
       )}
 
       <section className="py-[var(--spacing-section)]">
         <Container className="space-y-12">
-          <SectionHeader eyebrow={narrative.eyebrow} title={narrative.title} />
+          <SectionHeader
+            eyebrow={narrative.eyebrow}
+            title={narrative.title}
+            description={narrative.description}
+          />
           <ReliabilityArc steps={narrative.items} description={narrative.description} />
         </Container>
       </section>
@@ -76,7 +95,7 @@ export default function HomePage() {
           <SectionHeader
             eyebrow={services.eyebrow}
             title={services.title}
-            description="A disciplined mix of diagnostics, monitoring, and field support keeps assets predictable."
+            description={services.description}
           />
           <div className="grid gap-6 md:grid-cols-2">
             {services.items.map((item) => (
@@ -119,15 +138,15 @@ export default function HomePage() {
         background={testimonial.background}
       />
 
-      {photoStripImages.length > 0 && (
+      {photoStripItems.length > 0 && (
         <section className="bg-base py-[var(--spacing-section)]">
           <Container className="space-y-8">
             <SectionHeader
-              eyebrow="In focus"
-              title="Scenes from recent deployments"
+              eyebrow={photoStrip.eyebrow}
+              title={photoStrip.title}
               align="center"
             />
-            <PhotoStrip images={photoStripImages} />
+            <PhotoStrip items={photoStripItems} />
           </Container>
         </section>
       )}

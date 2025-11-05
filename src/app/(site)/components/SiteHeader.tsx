@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "./Button";
@@ -12,12 +12,32 @@ export const SiteHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (!isOpen) {
+    if (typeof document === "undefined") {
       return;
     }
 
-    queueMicrotask(() => setIsOpen(false));
-  }, [isOpen, pathname]);
+    const { body } = document;
+    if (isOpen) {
+      const previous = body.style.overflow;
+      body.style.overflow = "hidden";
+      return () => {
+        body.style.overflow = previous;
+      };
+    }
+
+    return undefined;
+  }, [isOpen]);
+
+  const menuItems = useMemo(
+    () =>
+      NAV_ITEMS.map((item, index) => ({
+        ...item,
+        delay: `${index * 40}ms`,
+      })),
+    [],
+  );
+
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#d7dde3] bg-base/95 backdrop-blur">
@@ -73,26 +93,43 @@ export const SiteHeader = () => {
         id="mobile-nav"
         className={cn(
           "lg:hidden",
-          isOpen ? "block" : "hidden",
+          "fixed inset-0 z-40 origin-top bg-[#081522]/95 text-white transition-all duration-300 ease-out",
+          isOpen ? "pointer-events-auto opacity-100 backdrop-blur" : "pointer-events-none opacity-0",
         )}
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!isOpen}
       >
-        <nav className="space-y-4 border-t border-[#d7dde3] bg-base px-6 py-6 text-sm font-medium text-muted">
-          {NAV_ITEMS.map((item) => (
+        <div className="flex h-full flex-col justify-between px-6 pb-8 pt-24">
+          <nav className="space-y-6">
+            {menuItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "block text-2xl font-semibold tracking-tight transition-transform duration-300",
+                  pathname === item.href ? "text-white" : "text-white/75 hover:text-white",
+                )}
+                style={{ transform: isOpen ? "none" : "translateY(12px)", transitionDelay: isOpen ? item.delay : "0ms" }}
+                onClick={closeMenu}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="space-y-4">
+            <Button href="/contact" variant="primary" className="w-full justify-center" onClick={closeMenu}>
+              Request Assessment
+            </Button>
             <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "block rounded-[4px] px-2 py-2 transition-colors duration-200 hover:bg-surface hover:text-steel",
-                pathname === item.href && "bg-surface text-steel",
-              )}
+              href="tel:+118553774622"
+              className="block text-center text-sm font-semibold uppercase tracking-[0.28em] text-white/80"
+              onClick={closeMenu}
             >
-              {item.label}
+              Call 1-855-377-4622
             </Link>
-          ))}
-          <Button href="/contact" variant="primary" className="w-full justify-center">
-            Request Assessment
-          </Button>
-        </nav>
+          </div>
+        </div>
       </div>
     </header>
   );
