@@ -116,10 +116,10 @@ export const Carousel = ({ items }: CarouselProps) => {
           ))}
         </div>
       </div>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white via-white/80 to-transparent" aria-hidden="true" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white via-white/80 to-transparent" aria-hidden="true" />
-      <div className="mt-6 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
+      <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-24 bg-gradient-to-r from-white via-white/80 to-transparent sm:block" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-24 bg-gradient-to-l from-white via-white/80 to-transparent sm:block" aria-hidden="true" />
+      <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+        <div className="hidden items-center gap-2 sm:flex">
           <button
             type="button"
             className="card-hover inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d7dde3] bg-white text-steel transition-colors duration-200 ease-in-out disabled:cursor-not-allowed disabled:opacity-40"
@@ -139,7 +139,7 @@ export const Carousel = ({ items }: CarouselProps) => {
             <span aria-hidden="true">→</span>
           </button>
         </div>
-        <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Carousel dots">
+        <div className="flex flex-wrap items-center justify-center gap-2" role="tablist" aria-label="Carousel dots">
           {items.map((item, index) => (
             <button
               key={item.src}

@@ -35,8 +35,6 @@ const StepCard = ({ step, index, isActive, onVisible }: StepCardProps) => {
     }
   }, [index, isVisible, onVisible]);
 
-  const delay = `${Math.min(index * 60, 80)}ms`;
-
   return (
     <li
       ref={ref}
@@ -49,7 +47,12 @@ const StepCard = ({ step, index, isActive, onVisible }: StepCardProps) => {
       <div className="absolute left-4 top-6 flex h-8 w-8 items-center justify-center rounded-full border border-[#d7dde3] bg-surface text-xs font-semibold text-steel">
         {index + 1}
       </div>
-      <div className="fade-in-up space-y-3" style={{ transitionDelay: delay }}>
+      <div
+        className={cn(
+          "space-y-3 transition-opacity duration-200 ease-out",
+          isActive ? "opacity-100" : "opacity-90",
+        )}
+      >
         <h3 className="text-lg font-semibold text-steel">{step.title}</h3>
         <p className="text-sm text-muted sm:text-base">{step.description}</p>
       </div>
