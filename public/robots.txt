@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+# Prevents all user agents from indexing the site while it remains public on Vercel.
